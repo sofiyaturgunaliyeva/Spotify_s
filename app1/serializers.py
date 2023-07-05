@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import *
 
-class QoshiqchiSerializer(serializers.Serializer):
+class QoshiqchiSerializer(serializers.ModelSerializer):
     class Meta:
         model = Qoshiqchi
         fields = '__all__'
