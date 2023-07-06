@@ -25,10 +25,14 @@ from rest_framework.viewsets import ModelViewSet
 class QoshiqchilarAPIView(APIView):
     def get(self, request):
         soz = request.query_params.get('qidiruv')
+        tartib = request.query_params.get('tartiblash')
         if soz:
             qoshiqchilar = Qoshiqchi.objects.filter(ism__contains=soz) | Qoshiqchi.objects.filter(
                 davlat=soz
-            ).order_by('tugilgan_yil')
+            )
+        elif tartib:
+            qoshiqchilar = Qoshiqchi.objects.order_by('tugilgan_yil')
+
         else:
             qoshiqchilar = Qoshiqchi.objects.all()
         serializer = QoshiqchiSerializer(qoshiqchilar, many=True)
@@ -66,10 +70,14 @@ class QoshiqchiDetailView(APIView):
 class QoshiqlarAPIView(APIView):
     def get(self, request):
         soz = request.query_params.get('qidiruv')
+        tartib = request.query_params.get('tartiblash')
         if soz:
             qoshiqlar = Qoshiq.objects.filter(nom__contains=soz) | Qoshiq.objects.filter(
                 janr=soz
-            ).order_by('davomiylik')
+            )
+        elif tartib:
+            qoshiqlar = Qoshiq.objects.order_by('davomiylik')
+
         else:
             qoshiqlar = Qoshiq.objects.all()
         serializer = QoshiqSerializer(qoshiqlar, many=True)
@@ -98,9 +106,11 @@ class QoshiqlarAPIView(APIView):
 class AlbomlarAPIView(APIView):
     def get(self, request):
         soz = request.query_params.get('qidiruv')
+        tartib = request.query_params.get('tartiblash')
         if soz:
-            albomlar = Albom.objects.filter(nom__contains=soz).order_by('sana')
-
+            albomlar = Albom.objects.filter(nom__contains=soz)
+        elif tartib:
+            albomlar = Albom.objects.order_by('sana')
         else:
             albomlar = Albom.objects.all()
         serializer = AlbomSerializer(albomlar, many=True)
