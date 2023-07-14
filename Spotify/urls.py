@@ -6,9 +6,15 @@ router = DefaultRouter()
 router.register("albomlar",AlbomModelViewset)
 router.register("qoshiqlar",QoshiqModelViewset)
 router.register("qoshiqchilar",QoshiqchiModelViewset)
+from drf_spectacular.views import SpectacularAPIView, \
+    SpectacularRedocView, \
+    SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('apiview_docs/', SpectacularAPIView.as_view(), name="schema"),
+    path('docs/', SpectacularSwaggerView.as_view(url_name = "schema")),
+    path('redoc/', SpectacularRedocView.as_view(url_name = "schema")),
     path('qoshiqchilar/', QoshiqchilarAPIView.as_view()),
     path('qoshiqchilar_api/', QoshiqchilarAPIView.as_view()),
     path('qoshiqlar_api/', QoshiqlarAPIView.as_view()),
